@@ -9,65 +9,71 @@
 
  module.exports = function (grunt) {
 
-   grunt.loadNpmTasks('grunt-contrib-qunit');
-   grunt.loadNpmTasks('grunt-qunit-junit');
-   grunt.loadNpmTasks('gtunt-ts');
+   var fs = require('fs');
 
-   grunt.initConfig({
-     ts : {
-       tsqunit_build : {
-         src : [],
-         options : {
-           module : 'amd',
-           target: 'es5'
-         }
-       }
-     },
-
-     qunit: {
-       options: {
-         coverage: {
-           src : [],
-           linesTresholdPct: 80
-         }
-       },
-       tsqunit_target: [],
-     },
-     qunit_junit: {
-       options: {
-       }
-     }
-   });
+   if(fs.existsSync('./node_modules/grunt-contrib-qunit')){
+     grunt.loadNpmTasks('grunt-contrib-qunit');
+   }else{
+     grunt.loadNpmTasks('grunt-typescript-qunit/node_modules/grunt-contrib-qunit');
+   }
+   if(fs.existsSync('./node_modules/grunt-qunit-junit')){
+     grunt.loadNpmTasks('grunt-qunit-junit');
+   }else{
+     grunt.loadNpmTasks('grunt-typescript-qunit/node_modules/grunt-qunit-junit');
+   }
+   if(fs.existsSync('./node_modules/grunt-qunit-istanbul')){
+     grunt.loadNpmTasks('grunt-qunit-istanbul');
+   }else{
+     grunt.loadNpmTasks('grunt-typescript-qunit/node_modules/grunt-qunit-istanbul');
+   }
+   if(fs.existsSync('./node_modules/grunt-ts')){
+     grunt.loadNpmTasks('grunt-ts');
+   }else{
+     grunt.loadNpmTasks('grunt-typescript-qunit/node_modules/grunt-ts');
+   }
 
    grunt.registerTask(taskName,'',function(){
      var tsqunitConfig = grunt.config(taskName);
-     var tsConfig = grunt.config('ts')['tsqunit_build'];
-     var qunitConfig = grunt.config('qunit');
-     var qunitJunitConfig = grunt.config('qunit_junit');
 
-     tsConfig.src.push(tsqunitConfig.srcDir + '/**/*.ts');
-     tsConfig.src.push(tsqunitConfig.testDir + '/**/*.ts');
-     qunitConfig.options.coverage.src.push(tsqunitConfig.srcDir + '/**/*.ts');
-     qunitConfig.options.coverage.instrumentedFiles = tsqunitConfig.buildReportDir + '/instrument';
-     qunitConfig.options.coverage.htmlReport = tsqunitConfig.buildReportDir + '/coverage-html-reports';
-     qunitConfig.options.coverage.coberturaReport = tsqunitConfig.buildReportDir + '/cobertura-reports';
-     qunitCongig.tsqunit_target.push(tsqunitConfig.testDir + '/**/*.html');
-     qunitJunitConfig.options.dest = tsqunitConfig.buildReportDir + '/junit-reports';
+     grunt.config.merge({
+       ts : {
+         tsqunit_build : {
+           src : [tsqunitConfig.srcDir + '**/*.ts',tsqunitConfig.testDir + '**/*.ts'],
+           options : {
+             module : 'amd',
+             target: 'es5'
+           }
+         }
+       },
+       qunit: {
+         options: {
+           coverage: {
+             src : tsqunitConfig.srcDir + '**/*.js',
+             instrumentedFiles : tsqunitConfig.buildReportDir + 'instrument',
+             htmlReport : tsqunitConfig.buildReportDir + 'coverage-html-reports',
+             coberturaReport : tsqunitConfig.buildReportDir + 'cobertura-reports',
+             linesTresholdPct: 80
+           }
+         },
+         tsqunit_target: [tsqunitConfig.testDir + '**/*.html']
+       },
+       qunit_junit: {
+         options: {
+           dest : tsqunitConfig.buildReportDir + 'junit-reports'
+         }
+       }
+     })
 
      grunt.task.run('ts:tsqunit_build');
-
      grunt.task.run('tsqunithtml');
-
      grunt.task.run('qunit_junit');
-
      grunt.task.run('qunit:tsqunit_target');
-
    });
 
    grunt.registerTask('tsqunithtml', 'Create Qunit HTML for TypeScript Task', function () {
-     var defaultQunitCssPath = './node_modules/grunt-typescript-qunit-html/node_modules/qunitjs/qunit/qunit.css';
-     var defaultQunitJsPath = './node_modules/grunt-typescript-qunit-html/node_modules/qunitjs/qunit/qunit.js';
-     var defaultSinonJsPath = './node_modules/grunt-typescript-qunit-html/node_modules/sinon/pkg/sinon-1.15.4.js';
+     var defaultQunitCssPath = './node_modules/grunt-typescript-qunit/node_modules/qunitjs/qunit/qunit.css';
+     var defaultQunitJsPath = './node_modules/grunt-typescript-qunit/node_modules/qunitjs/qunit/qunit.js';
+     var defaultSinonJsPath = './node_modules/grunt-typescript-qunit/node_modules/sinon/pkg/sinon-1.15.4.js';
 
      var testFileRegex = new RegExp('.*\\-test.ts$');
 
