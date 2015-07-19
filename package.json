@@ -1,0 +1,21 @@
+{
+  "name": "grunt-typescript-qunit",
+  "version": "0.0.1",
+  "description": "Typescript Qunit test runner for Grunt",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "gruntplugin"
+  ],
+  "author": "Satoshi Watanabe",
+  "license": "ISC",
+  "devDependencies": {
+    "fs": "0.0.2",
+    "grunt": "^0.4.5",
+    "grunt-ts": "^4.1.2",
+    "path": "^0.11.14",
+    "qunitjs": "^1.18.0",
+    "sinon": "^1.15.4"
+  }
+}
