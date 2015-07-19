@@ -10,7 +10,7 @@
   ],
   "author": "Satoshi Watanabe",
   "license": "ISC",
-  "devDependencies": {
+  "dependencies": {
     "fs": "0.0.2",
     "grunt": "^0.4.5",
     "grunt-ts": "^4.1.2",
