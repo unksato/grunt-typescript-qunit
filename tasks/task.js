@@ -52,6 +52,7 @@
              instrumentedFiles : tsqunitConfig.buildReportDir + 'instrument',
              htmlReport : tsqunitConfig.buildReportDir + 'coverage-html-reports',
              coberturaReport : tsqunitConfig.buildReportDir + 'cobertura-reports',
+             lcovReport : tsqunitConfig.buildReportDir + 'lcov-reports',
              linesTresholdPct: 80
            }
          },
