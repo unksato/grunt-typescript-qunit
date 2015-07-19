@@ -64,10 +64,6 @@
        }
      })
 
-     console.log(grunt.config('ts'));
-
-     console.log(grunt.config('qunit'));
-
      grunt.task.run('ts:tsqunit_build');
      grunt.task.run('tsqunithtml');
      grunt.task.run('qunit_junit');
