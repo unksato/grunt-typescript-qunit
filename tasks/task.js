@@ -43,7 +43,7 @@
              module : 'amd',
              target: 'es5',
              sourceMap: true,
-             sourceRoot: '/'
+             sourceRoot: './'
            }
          }
        },
