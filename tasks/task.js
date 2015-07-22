@@ -31,6 +31,11 @@
    }else{
      grunt.loadNpmTasks('grunt-typescript-qunit/node_modules/grunt-ts');
    }
+   if(fs.existsSync('./node_modules/grunt-cover-ts')){
+     grunt.loadNpmTasks('grunt-cover-ts');
+   }else{
+     grunt.loadNpmTasks('grunt-typescript-qunit/node_modules/grunt-cover-ts');
+   }
 
    grunt.registerTask(taskName,'',function(){
      var tsqunitConfig = grunt.config(taskName);
