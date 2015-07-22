@@ -64,13 +64,20 @@
          options: {
            dest : tsqunitConfig.buildReportDir + 'junit-reports'
          }
-       }
+       },
+       cover_ts : {
+          files : {
+            src : tsqunitConfig.buildReportDir + 'lcov-reports/lcov.info',
+            dest : tsqunitConfig.buildReportDir + 'lcov-reports/lcov.ts.info'
+          }
+        }
      })
 
      grunt.task.run('ts:tsqunit_build');
      grunt.task.run('tsqunithtml');
      grunt.task.run('qunit_junit');
      grunt.task.run('qunit:tsqunit_target');
+     grunt.task.run('cover_ts');
    });
 
    grunt.registerTask('tsqunithtml', 'Create Qunit HTML for TypeScript Task', function () {
