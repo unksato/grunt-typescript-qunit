@@ -125,19 +125,21 @@
          return arr;
      };
 
-     var getRefPath = function(target,dir){
-       var reg = new RegExp(/ *\/\/\/ *< *reference +path="(.*?)" *\/>.*\n/g);
+     var getRefPath = function(target,dir,tsFiles){
+       var reg = new RegExp(/ *\/\/\/ *< *reference +path="(.*?)" *\/>.*$/g);
        if(!dir)dir = path.parse(target).dir;
        var src = fs.readFileSync(target,'utf8');
-       var tsFiles = [];
+
+       if(!tsFiles)
+           tsFiles = [];
 
        var match;
-
        while(match = reg.exec(src)){
          var tsFile = path.resolve(path.join(dir,match[1]));
-         tsFiles.push(tsFile);
-         var ret = getRefPath(tsFile, path.join(path.parse(target).dir,path.parse(match[1]).dir));
-         tsFiles = tsFiles.concat(ret);
+         if(tsFiles.indexOf(tsFile) == -1){
+           tsFiles.push(tsFile);
+           getRefPath(tsFile, path.join(path.parse(target).dir,path.parse(match[1]).dir),tsFiles);
+         }
        }
        return tsFiles;
      };
