@@ -37,8 +37,10 @@
      grunt.loadNpmTasks('grunt-typescript-qunit/node_modules/grunt-cover-ts');
    }
 
-   grunt.registerTask(taskName,'',function(){
-     var tsqunitConfig = grunt.config(taskName);
+  grunt.registerMultiTask(taskName,'',function(){
+     var tsqunitConfig = grunt.config(taskName)[this.target];
+
+     grunt.log.write(JSON.stringify(tsqunitConfig));
 
      grunt.config.merge({
        ts : {
@@ -75,7 +77,8 @@
             src : tsqunitConfig.buildReportDir + 'lcov-reports/lcov.info',
             dest : tsqunitConfig.buildReportDir + 'lcov-reports/lcov.ts.info'
           }
-        }
+        },
+        tsqunithtml : tsqunitConfig
      })
 
      grunt.task.run('ts:tsqunit_build');
@@ -92,7 +95,7 @@
 
      var testFileRegex = new RegExp('.*\\-test.ts$');
 
-     var settings = grunt.config(taskName);
+     var settings = grunt.config('tsqunithtml');
 
      var fs = require('fs'),
          path = require('path');
