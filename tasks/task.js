@@ -126,7 +126,7 @@
      };
 
      var getRefPath = function(target,dir,tsFiles){
-       var reg = new RegExp(/ *\/\/\/ *< *reference +path="(.*?)" *\/>.*$/g);
+       var reg = new RegExp(/ *\/\/\/ *< *reference +path="(.*?)" *\/>.*\r?\n/g);
        if(!dir)dir = path.parse(target).dir;
        var src = fs.readFileSync(target,'utf8');
 
