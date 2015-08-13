@@ -40,8 +40,6 @@
   grunt.registerMultiTask(taskName,'',function(){
      var tsqunitConfig = grunt.config(taskName)[this.target];
 
-     grunt.log.write(JSON.stringify(tsqunitConfig));
-
      grunt.config.merge({
        ts : {
          tsqunit_build : {
