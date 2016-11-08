@@ -72,8 +72,8 @@
        },
        cover_ts : {
           files : {
-            src : tsqunitConfig.buildReportDir + 'lcov-reports/lcov.txt',
-            dest : tsqunitConfig.buildReportDir + 'lcov-reports/lcov.ts.txt'
+            src : tsqunitConfig.buildReportDir + 'lcov-reports/lcov.info',
+            dest : tsqunitConfig.buildReportDir + 'lcov-reports/lcov.ts.info'
           }
         },
         tsqunithtml : tsqunitConfig
